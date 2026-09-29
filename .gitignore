@@ -7,18 +7,36 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Зависимости и сборка
 node_modules
 dist
 dist-ssr
+coverage
 *.local
 
-# Editor directories and files
+# Секреты — никогда не коммитим (файл .env свой у каждого)
+.env
+.env.*
+!.env.example
+
+# Редакторы и IDE
 .vscode/*
 !.vscode/extensions.json
 .idea
-.DS_Store
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Прочее
+*.tmp
+*~
