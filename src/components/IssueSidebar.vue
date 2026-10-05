@@ -83,3 +83,131 @@ const issues = []
     </div>
   </aside>
 </template>
+
+<style scoped>
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  min-height: 0;
+}
+
+.sidebar__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px 10px;
+}
+
+.sidebar__title {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sidebar__title-count {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-muted);
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: var(--surface-3);
+}
+
+.sidebar__search {
+  padding: 0 16px 10px;
+  position: relative;
+}
+
+.sidebar__search input {
+  width: 100%;
+  padding: 8px 12px 8px 32px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  outline: none;
+  font-size: 13px;
+}
+
+.sidebar__search input::placeholder {
+  color: var(--text-muted);
+}
+
+.sidebar__search input:focus {
+  border-color: var(--border-strong);
+  background: var(--surface-3);
+}
+
+.sidebar__search-icon {
+  position: absolute;
+  left: 26px;
+  top: 50%;
+  transform: translateY(calc(-50% - 5px));
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.sidebar__filterbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px 12px;
+  border-bottom: 1px solid var(--border);
+  font-size: 12.5px;
+  color: var(--text-muted);
+}
+
+.filterbar__sort {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--text-muted);
+  padding: 4px 6px;
+  border-radius: 4px;
+  transition:
+    color 0.12s,
+    background 0.12s;
+}
+
+.filterbar__sort:hover {
+  color: var(--text);
+  background: var(--surface-2);
+}
+
+.filterbar__sort b {
+  color: var(--text-dim);
+  font-weight: 500;
+}
+
+.list {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+}
+
+.empty {
+  margin: auto;
+  text-align: center;
+  padding: 32px 20px;
+  color: var(--text-muted);
+  font-size: 13px;
+  max-width: 240px;
+}
+
+.empty svg {
+  margin: 0 auto 10px;
+  color: var(--border-strong);
+}
+
+.empty__title {
+  color: var(--text-dim);
+  margin-bottom: 4px;
+  font-size: 13.5px;
+  font-weight: 600;
+}
+</style>
