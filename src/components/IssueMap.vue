@@ -32,20 +32,18 @@ const { cursor, pinned, clearPin } = useCityMap(el)
   height: 100%;
 }
 
-/* Тайлы CARTO dark_all осветлены: тёмная карта, но дороги, надписи и цвета читаются.
-   Фильтр действует только на подложку (первый .ol-layer — базовый тайл-слой). */
+/* Осветление растровой подложки: фильтр применяется только к базовому слою тайлов */
 .map :deep(.ol-layer:first-child > canvas) {
   filter: brightness(1.3) saturate(1.4) contrast(1.1);
 }
 
-/* --- Стили элементов, которые рисует сама библиотека OpenLayers (их нет в шаблоне,
-       поэтому нужен :deep) --- */
+/* Элементы OpenLayers создаются библиотекой вне шаблона — к ним применяется :deep */
 
 .map :deep(.ol-zoom) {
-  top: 12px !important;
-  left: 12px !important;
-  background: transparent !important;
-  padding: 0 !important;
+  top: 12px;
+  left: 12px;
+  background: transparent;
+  padding: 0;
   display: flex;
   flex-direction: column;
   gap: 1px;
@@ -55,43 +53,43 @@ const { cursor, pinned, clearPin } = useCityMap(el)
 }
 
 .map :deep(.ol-zoom button) {
-  width: 32px !important;
-  height: 32px !important;
-  background: var(--surface) !important;
-  color: var(--text-dim) !important;
-  border: none !important;
-  border-radius: 0 !important;
-  font-size: 16px !important;
+  width: 32px;
+  height: 32px;
+  background: var(--surface);
+  color: var(--text-dim);
+  border: none;
+  border-radius: 0;
+  font-size: 16px;
   transition:
     background 0.12s,
     color 0.12s;
 }
 
 .map :deep(.ol-zoom button:hover) {
-  background: var(--surface-3) !important;
-  color: var(--accent) !important;
+  background: var(--surface-3);
+  color: var(--accent);
 }
 
 .map :deep(.ol-attribution) {
-  background: rgba(21, 21, 26, 0.8) !important;
+  background: rgba(21, 21, 26, 0.8);
   backdrop-filter: blur(4px);
-  border: 1px solid var(--border) !important;
-  border-radius: 6px !important;
-  padding: 2px 6px !important;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 2px 6px;
 }
 
 .map :deep(.ol-attribution ul) {
-  font-size: 10.5px !important;
-  color: var(--text-muted) !important;
+  font-size: 10.5px;
+  color: var(--text-muted);
 }
 
 .map :deep(.ol-attribution a) {
-  color: var(--text-dim) !important;
-  text-decoration: none !important;
+  color: var(--text-dim);
+  text-decoration: none;
 }
 
 .map :deep(.ol-attribution a:hover) {
-  color: var(--accent) !important;
+  color: var(--accent);
 }
 
 .map :deep(.ol-scale-line) {

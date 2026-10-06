@@ -3,7 +3,7 @@ import VectorLayer from 'ol/layer/Vector'
 import XYZ from 'ol/source/XYZ'
 import VectorSource from 'ol/source/Vector'
 
-// Ключ CARTO basemaps — из .env, в git не попадает (см. .gitignore)
+// Ключ подложки CARTO; хранится в .env и в git не попадает
 const CARTO_KEY = import.meta.env.VITE_CARTO_KEY
 
 const BASEMAP_URL = 'https://basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}.png'
@@ -11,8 +11,8 @@ const BASEMAP_URL = 'https://basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/
 const ATTRIBUTION =
   '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>, © <a href="https://carto.com/attribution/">CARTO</a>'
 
-// Подложка: сами тайлы CARTO (растровые). Ей простительно быть в отдельной функции,
-// но ключ и URL лучше держать здесь, а не в инициализации карты.
+// Растровая подложка CARTO: URL, атрибуция и ключ заданы здесь,
+// чтобы инициализация карты оставалась лаконичной
 export function createBasemapLayer() {
   if (!CARTO_KEY) {
     console.warn('[map] VITE_CARTO_KEY не задан — тайлы с водяным знаком. Ключ: https://carto.com/basemaps/apikey')
@@ -27,8 +27,7 @@ export function createBasemapLayer() {
   })
 }
 
-// Слой для маркеров обращений — точечные объекты в меркаторе (VectorSource).
-// Здесь же в будущем будут стили Feature, кластеры и колбеки.
+// Слой маркеров обращений. Стили фич добавятся при реализации обращений
 export function createIssuesLayer() {
   return new VectorLayer({ source: new VectorSource() })
 }
