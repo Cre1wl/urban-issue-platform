@@ -13,6 +13,7 @@ const ICONS = {
   search: { viewBox: '0 0 24 24', stroke: 1.8, size: 14 },
   'chevron-down': { viewBox: '0 0 24 24', stroke: 2, size: 10 },
   warning: { viewBox: '0 0 32 32', stroke: 2.4, size: 36 },
+  logout: { viewBox: '0 0 24 24', stroke: 1.8, size: 15 },
 }
 
 const icon = computed(() => ICONS[props.name] ?? ICONS.warning)
@@ -52,6 +53,12 @@ const width = computed(() => props.size ?? icon.value.size)
 
     <template v-else-if="name === 'chevron-down'">
       <path d="m6 9 6 6 6-6" />
+    </template>
+
+    <template v-else-if="name === 'logout'">
+      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+      <path d="m16 17 5-5-5-5" />
+      <path d="M21 12H9" />
     </template>
 
     <template v-else>

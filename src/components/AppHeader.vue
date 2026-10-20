@@ -1,6 +1,16 @@
 <script setup>
+import { RouterLink, useRouter } from 'vue-router'
 import AppBrand from './AppBrand.vue'
 import AppIcon from './AppIcon.vue'
+import useUser from '../composables/useUser'
+
+const router = useRouter()
+const { user, logout } = useUser()
+
+const onLogout = () => {
+  logout()
+  router.push('/')
+}
 </script>
 
 <template>
@@ -18,9 +28,19 @@ import AppIcon from './AppIcon.vue'
         <AppIcon name="bell" />
         <span class="icon-btn__dot"></span>
       </button>
-      <button class="avatar" title="Профиль">
-        <AppIcon name="user" />
-      </button>
+
+      <RouterLink v-if="user.isGuest" class="btn btn--outline btn--sm" to="/">Войти</RouterLink>
+
+      <template v-else>
+        <span class="header-user">{{ user.nickname }}</span>
+        <RouterLink class="avatar" to="/profile" title="Профиль">
+          <img v-if="user.avatar" class="avatar__img" :src="user.avatar" alt="" />
+          <AppIcon v-else name="user" />
+        </RouterLink>
+        <button class="icon-btn" title="Выйти" @click="onLogout">
+          <AppIcon name="logout" />
+        </button>
+      </template>
     </div>
   </header>
 </template>
@@ -98,6 +118,15 @@ import AppIcon from './AppIcon.vue'
   border: 1.5px solid var(--bg);
 }
 
+.header-user {
+  font-size: 13px;
+  color: var(--text-dim);
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .avatar {
   width: 32px;
   height: 32px;
@@ -106,6 +135,7 @@ import AppIcon from './AppIcon.vue'
   place-items: center;
   color: var(--text-muted);
   background: var(--surface-3);
+  overflow: hidden;
   transition:
     color 0.12s,
     background 0.12s;
@@ -114,6 +144,12 @@ import AppIcon from './AppIcon.vue'
 .avatar:hover {
   color: var(--accent);
   background: var(--surface-2);
+}
+
+.avatar__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 @media (max-width: 900px) {
