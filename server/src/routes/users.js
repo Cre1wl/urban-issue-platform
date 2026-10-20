@@ -1,29 +1,11 @@
 import { Router } from 'express'
 import bcrypt from 'bcryptjs'
-import multer from 'multer'
-import { randomUUID } from 'node:crypto'
-import path from 'node:path'
 import pool from '../../db/pool.js'
 import auth from '../middleware/auth.js'
-import { toPublic } from '../lib/tokens.js'
+import { avatarUpload } from '../lib/uploads.js'
+import { toPublic } from '../lib/userView.js'
 
 const router = Router()
-
-const uploadsDir = path.join(process.cwd(), 'uploads')
-const upload = multer({
-  storage: multer.diskStorage({
-    destination: uploadsDir,
-    filename: (req, file, cb) => {
-      const ext = path.extname(file.originalname).toLowerCase()
-      cb(null, `${randomUUID()}${ext}`)
-    },
-  }),
-  limits: { fileSize: 5 * 1024 * 1024 },
-  fileFilter: (req, file, cb) => {
-    const ok = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'].includes(file.mimetype)
-    cb(ok ? null : new Error('Только изображения'), ok)
-  },
-})
 
 router.use(auth)
 
@@ -65,7 +47,7 @@ router.patch('/me', async (req, res) => {
   res.json(toPublic(updated.rows[0]))
 })
 
-router.post('/me/avatar', upload.single('avatar'), async (req, res) => {
+router.post('/me/avatar', avatarUpload, async (req, res) => {
   if (!req.file) return res.status(400).json({ error: 'Файл не получен' })
 
   const { rows } = await pool.query(

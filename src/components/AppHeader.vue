@@ -1,9 +1,10 @@
 <script setup>
-import { RouterLink, useRouter } from 'vue-router'
+import { RouterLink, useRoute, useRouter } from 'vue-router'
 import AppBrand from './AppBrand.vue'
 import AppIcon from './AppIcon.vue'
 import useUser from '../composables/useUser'
 
+const route = useRoute()
 const router = useRouter()
 const { user, logout } = useUser()
 
@@ -18,7 +19,13 @@ const onLogout = () => {
     <AppBrand />
 
     <nav class="nav">
-      <a class="nav__link nav__link--active">Карта обращений</a>
+      <RouterLink
+        class="nav__link"
+        :class="{ 'nav__link--active': route.path === '/map' }"
+        to="/map"
+      >
+        Карта обращений
+      </RouterLink>
       <a class="nav__link">Объявления</a>
       <a class="nav__link">О проекте</a>
     </nav>
@@ -33,7 +40,12 @@ const onLogout = () => {
 
       <template v-else>
         <span class="header-user">{{ user.nickname }}</span>
-        <RouterLink class="avatar" to="/profile" title="Профиль">
+        <RouterLink
+          class="avatar"
+          :class="{ 'avatar--on': route.path === '/profile' }"
+          to="/profile"
+          title="Профиль"
+        >
           <img v-if="user.avatar" class="avatar__img" :src="user.avatar" alt="" />
           <AppIcon v-else name="user" />
         </RouterLink>
@@ -50,7 +62,9 @@ const onLogout = () => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 20px;
+  gap: 16px;
+  height: 58px;
+  padding: 0 24px;
   background: var(--bg);
   border-bottom: 1px solid var(--border);
   z-index: 20;
@@ -58,16 +72,17 @@ const onLogout = () => {
 
 .nav {
   display: flex;
-  gap: 2px;
+  gap: 4px;
   height: 100%;
   align-items: center;
 }
 
 .nav__link {
-  padding: 6px 12px;
+  padding: 7px 13px;
   border-radius: var(--radius-sm);
   font-size: 13.5px;
   color: var(--text-muted);
+  text-decoration: none;
   transition:
     color 0.12s,
     background 0.12s;
@@ -86,7 +101,7 @@ const onLogout = () => {
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 
 .icon-btn {
@@ -119,31 +134,37 @@ const onLogout = () => {
 }
 
 .header-user {
-  font-size: 13px;
+  font-size: 13.5px;
   color: var(--text-dim);
-  max-width: 160px;
+  max-width: 180px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .avatar {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   display: grid;
   place-items: center;
   color: var(--text-muted);
   background: var(--surface-3);
+  border: 1.5px solid var(--border);
   overflow: hidden;
   transition:
     color 0.12s,
-    background 0.12s;
+    border-color 0.12s;
 }
 
 .avatar:hover {
   color: var(--accent);
-  background: var(--surface-2);
+  border-color: var(--border-strong);
+}
+
+.avatar--on {
+  color: var(--accent);
+  border-color: var(--accent);
 }
 
 .avatar__img {

@@ -14,6 +14,8 @@ const ICONS = {
   'chevron-down': { viewBox: '0 0 24 24', stroke: 2, size: 10 },
   warning: { viewBox: '0 0 32 32', stroke: 2.4, size: 36 },
   logout: { viewBox: '0 0 24 24', stroke: 1.8, size: 15 },
+  lock: { viewBox: '0 0 24 24', stroke: 1.8, size: 15 },
+  image: { viewBox: '0 0 24 24', stroke: 1.8, size: 15 },
 }
 
 const icon = computed(() => ICONS[props.name] ?? ICONS.warning)
@@ -59,6 +61,17 @@ const width = computed(() => props.size ?? icon.value.size)
       <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
       <path d="m16 17 5-5-5-5" />
       <path d="M21 12H9" />
+    </template>
+
+    <template v-else-if="name === 'lock'">
+      <rect x="5" y="11" width="14" height="9" rx="2" />
+      <path d="M8 11V7a4 4 0 0 1 8 0v4" />
+    </template>
+
+    <template v-else-if="name === 'image'">
+      <rect x="4" y="5" width="16" height="14" rx="2" />
+      <circle cx="9.5" cy="10" r="1.5" />
+      <path d="m20 16-4.5-4.5L9 18" />
     </template>
 
     <template v-else>

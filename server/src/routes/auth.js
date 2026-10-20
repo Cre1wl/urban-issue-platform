@@ -1,7 +1,8 @@
 import { Router } from 'express'
 import bcrypt from 'bcryptjs'
 import pool from '../../db/pool.js'
-import { signToken, toPublic } from '../lib/tokens.js'
+import { signToken } from '../lib/tokens.js'
+import { toPublic } from '../lib/userView.js'
 
 const router = Router()
 
