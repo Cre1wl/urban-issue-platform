@@ -1,24 +1,25 @@
 import { shallowRef } from 'vue'
 import * as authService from '../core/data/authService'
 import * as userService from '../core/data/userService'
+import type { AuthResponse, RegisterPayload } from '../core/data/authService'
+import type { UpdateProfilePayload } from '../core/data/userService'
 import { clearToken, hasToken, saveToken } from '../core/auth/tokenStorage'
 import User from '../core/models/User'
 
 // Состояние уровня модуля: все компоненты видят одного и того же пользователя.
-// Как в примере преподавателя: всегда объект User, никогда null.
-const user = shallowRef(new User())
+const user = shallowRef<User>(new User())
 
 export default function useUser() {
-  const setSession = (data) => {
+  const setSession = (data: AuthResponse) => {
     saveToken(data.token)
     user.value = new User(data.user)
   }
 
-  const login = async (email, password) => {
+  const login = async (email: string, password: string) => {
     setSession(await authService.login(email, password))
   }
 
-  const register = async (payload) => {
+  const register = async (payload: RegisterPayload) => {
     setSession(await authService.register(payload))
   }
 
@@ -33,11 +34,11 @@ export default function useUser() {
     }
   }
 
-  const updateProfile = async (patch) => {
+  const updateProfile = async (patch: UpdateProfilePayload) => {
     user.value = new User(await userService.updateProfile(patch))
   }
 
-  const uploadAvatar = async (file) => {
+  const uploadAvatar = async (file: File) => {
     user.value = new User(await userService.uploadAvatar(file))
   }
 

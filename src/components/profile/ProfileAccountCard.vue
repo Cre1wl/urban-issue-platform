@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref, watch } from 'vue'
 import Card from '../ui/Card.vue'
 import FormField from '../ui/FormField.vue'
@@ -24,8 +24,8 @@ const save = async () => {
   try {
     await updateProfile({ nickname: nickname.value, email: email.value })
     notice.value = 'Данные сохранены'
-  } catch (err) {
-    error.value = err.message
+  } catch (err: any) {
+    error.value = err?.message || 'Ошибка'
   }
 }
 </script>

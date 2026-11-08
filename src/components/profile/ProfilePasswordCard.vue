@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 import Card from '../ui/Card.vue'
 import FormField from '../ui/FormField.vue'
@@ -27,8 +27,8 @@ const save = async () => {
     })
     currentPassword.value = newPassword.value = confirmNewPassword.value = ''
     notice.value = 'Пароль обновлён'
-  } catch (err) {
-    error.value = err.message
+  } catch (err: any) {
+    error.value = err?.message || 'Ошибка'
   }
 }
 </script>

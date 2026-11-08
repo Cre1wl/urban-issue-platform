@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
 import Card from '../ui/Card.vue'
@@ -26,14 +26,14 @@ const submit = async () => {
       await register({ email: email.value, nickname: nickname.value, password: password.value })
     }
     router.push('/map')
-  } catch (err) {
-    error.value = err.message
+  } catch (err: any) {
+    error.value = err?.message || 'Ошибка'
   } finally {
     busy.value = false
   }
 }
 
-const switchMode = (next) => {
+const switchMode = (next: string) => {
   mode.value = next
   error.value = ''
 }

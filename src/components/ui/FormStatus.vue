@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 defineProps({
   error: { type: String, default: '' },
   notice: { type: String, default: '' },

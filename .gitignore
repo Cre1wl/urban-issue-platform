@@ -13,6 +13,7 @@ dist
 dist-ssr
 coverage
 *.local
+*.tsbuildinfo
 
 # Секреты — никогда не коммитим (файл .env свой у каждого)
 .env

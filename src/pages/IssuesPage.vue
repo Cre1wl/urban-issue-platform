@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import AppHeader from '../components/AppHeader.vue'
 import IssueSidebar from '../components/IssueSidebar.vue'
 import IssueMap from '../components/IssueMap.vue'

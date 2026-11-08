@@ -1,17 +1,17 @@
 // Хранение JWT в браузере. Токен живёт в localStorage: это единственное
 // место, где обращаемся к нему — остальной код работает с functions ниже.
-export function saveToken(token) {
+export function saveToken(token: string): void {
   localStorage.setItem('token', token)
 }
 
-export function clearToken() {
+export function clearToken(): void {
   localStorage.removeItem('token')
 }
 
-export function getToken() {
+export function getToken(): string | null {
   return localStorage.getItem('token')
 }
 
-export function hasToken() {
+export function hasToken(): boolean {
   return Boolean(getToken())
 }

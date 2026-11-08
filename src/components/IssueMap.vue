@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { useTemplateRef } from 'vue'
 import { useCityMap } from '../composables/useCityMap'
 

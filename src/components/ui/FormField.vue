@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 defineProps({
   id: { type: String, required: true },
   label: { type: String, required: true },
@@ -20,7 +20,7 @@ defineEmits(['update:modelValue'])
       :value="modelValue"
       :placeholder="placeholder"
       :autocomplete="autocomplete"
-      @input="$emit('update:modelValue', $event.target.value)"
+      @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
     />
   </div>
 </template>

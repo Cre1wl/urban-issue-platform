@@ -1,6 +1,8 @@
-// Преобразует строку таблицы users во «внешний» вид:
+import type { PublicUser, UserRow } from '../domain'
+
+// Преобразует строку из таблицы users в объект для API:
 // camelCase вместо snake_case и без password_hash.
-export function toPublic(row) {
+export function toPublic(row: UserRow): PublicUser {
   return {
     id: row.id,
     email: row.email,

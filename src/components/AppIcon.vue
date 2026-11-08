@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue'
 
 const props = defineProps({
@@ -6,7 +6,13 @@ const props = defineProps({
   size: { type: Number, default: null },
 })
 
-const ICONS = {
+interface IconDef {
+  viewBox: string
+  stroke: number
+  size: number
+}
+
+const ICONS: Record<string, IconDef> = {
   bell: { viewBox: '0 0 24 24', stroke: 1.8, size: 16 },
   user: { viewBox: '0 0 24 24', stroke: 1.8, size: 15 },
   plus: { viewBox: '0 0 24 24', stroke: 2.4, size: 12 },
@@ -19,7 +25,7 @@ const ICONS = {
 }
 
 const icon = computed(() => ICONS[props.name] ?? ICONS.warning)
-const width = computed(() => props.size ?? icon.value.size)
+const width = computed(() => (props.size ?? icon.value.size) as number)
 </script>
 
 <template>

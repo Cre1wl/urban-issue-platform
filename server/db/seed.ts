@@ -1,10 +1,10 @@
 import 'dotenv/config'
 import bcrypt from 'bcryptjs'
-import pool from './pool.js'
+import pool from './pool'
 
 if (!process.env.DATABASE_URL) throw new Error('Не задан DATABASE_URL в server/.env')
 
-// Демо-данные для проверки ролей и админки (ТЗ: resident / moderator / admin)
+// Тестовые пользователи для разработки (роли: resident / moderator / admin)
 const users = [
   { email: 'admin@city.local', nickname: 'admin', role: 'admin' },
   { email: 'moderator@city.local', nickname: 'moderator', role: 'moderator' },
@@ -21,8 +21,8 @@ for (const user of users) {
      RETURNING nickname, role`,
     [user.email, user.nickname, passwordHash, user.role],
   )
-  console.log('готов:', rows[0].nickname, '(' + rows[0].role + ')')
+  console.log('Готово:', rows[0].nickname, '(' + rows[0].role + ')')
 }
 
 await pool.end()
-console.log('Пароль демо-пользователей: demo1234')
+console.log('Пароль для всех тестовых пользователей: demo1234')

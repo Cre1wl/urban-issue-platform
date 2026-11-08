@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import AppBrand from '../components/AppBrand.vue'
 import AuthCard from '../components/auth/AuthCard.vue'
 </script>

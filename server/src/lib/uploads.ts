@@ -3,8 +3,9 @@ import { mkdirSync } from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import multer from 'multer'
+import type { Request, Response, NextFunction } from 'express'
 
-// Папка с аватарами: server/uploads (рядом с index.js, не зависит от cwd)
+// Папка для аватаров: server/uploads (относительно index.ts, не зависит от cwd)
 export const uploadsDir = path.join(fileURLToPath(new URL('../../', import.meta.url)), 'uploads')
 mkdirSync(uploadsDir, { recursive: true })
 
@@ -24,12 +25,13 @@ const upload = multer({
   },
 })
 
-// Обёртка над multer: ошибки загрузки помечаем статусом 400
-export function avatarUpload(req, res, next) {
-  upload.single('avatar')(req, res, (err) => {
+// Обёртка над multer: ошибки загрузки приводим к ответу 400
+export function avatarUpload(req: Request, res: Response, next: NextFunction) {
+  upload.single('avatar')(req, res, (err: unknown) => {
     if (err) {
-      err.status = 400
-      return next(err)
+      const error = err as Error & { status?: number }
+      error.status = 400
+      return next(error)
     }
     next()
   })

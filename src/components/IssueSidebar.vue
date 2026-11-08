@@ -1,7 +1,7 @@
-<script setup>
+<script setup lang="ts">
 import AppIcon from './AppIcon.vue'
 
-const issues = []
+const issues: any[] = []
 </script>
 
 <template>

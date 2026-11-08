@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { computed, onBeforeUnmount, ref } from 'vue'
 import Card from '../ui/Card.vue'
 import FormStatus from '../ui/FormStatus.vue'
@@ -7,18 +7,18 @@ import { roleLabel } from '../../core/constants/roles'
 
 const { user, uploadAvatar } = useUser()
 
-const avatarInput = ref(null)
-const pendingFile = ref(null)
+const avatarInput = ref<HTMLInputElement | null>(null)
+const pendingFile = ref<File | null>(null)
 const previewUrl = ref('')
 const notice = ref('')
 const error = ref('')
 
-const initials = computed(() => user.value.nickname.trim().charAt(0).toUpperCase())
+const initials = computed(() => (user.value.nickname || '').trim().charAt(0).toUpperCase() || '?')
 const role = computed(() => roleLabel(user.value.role))
 
 const createdAt = computed(() => {
   if (!user.value.createdAt) return ''
-  return new Date(user.value.createdAt).toLocaleDateString('ru-RU', {
+  return new Date(user.value.createdAt as any).toLocaleDateString('ru-RU', {
     day: 'numeric',
     month: 'long',
     year: 'numeric',
@@ -27,9 +27,10 @@ const createdAt = computed(() => {
 
 const pickAvatar = () => avatarInput.value?.click()
 
-const onAvatarSelected = (event) => {
-  const file = event.target.files?.[0]
-  event.target.value = ''
+const onAvatarSelected = (event: Event) => {
+  const target = event.target as HTMLInputElement
+  const file = target.files?.[0]
+  target.value = ''
   if (!file) return
   error.value = ''
   notice.value = ''
@@ -56,8 +57,8 @@ const saveAvatar = async () => {
     await uploadAvatar(pendingFile.value)
     resetDraft()
     notice.value = 'Аватар сохранён'
-  } catch (err) {
-    error.value = err.message
+  } catch (err: any) {
+    error.value = err?.message || 'Ошибка'
   }
 }
 

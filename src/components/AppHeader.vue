@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { RouterLink, useRoute, useRouter } from 'vue-router'
 import AppBrand from './AppBrand.vue'
 import AppIcon from './AppIcon.vue'

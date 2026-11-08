@@ -4,7 +4,7 @@ import XYZ from 'ol/source/XYZ'
 import VectorSource from 'ol/source/Vector'
 
 // Ключ подложки CARTO; хранится в .env и в git не попадает
-const CARTO_KEY = import.meta.env.VITE_CARTO_KEY
+const CARTO_KEY = import.meta.env.VITE_CARTO_KEY as string | undefined
 
 const BASEMAP_URL = 'https://basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}.png'
 
@@ -13,7 +13,7 @@ const ATTRIBUTION =
 
 // Растровая подложка CARTO: URL, атрибуция и ключ заданы здесь,
 // чтобы инициализация карты оставалась лаконичной
-export function createBasemapLayer() {
+export function createBasemapLayer(): TileLayer {
   if (!CARTO_KEY) {
     console.warn('[map] VITE_CARTO_KEY не задан — тайлы с водяным знаком. Ключ: https://carto.com/basemaps/apikey')
   }
@@ -28,6 +28,6 @@ export function createBasemapLayer() {
 }
 
 // Слой маркеров обращений. Стили фич добавятся при реализации обращений
-export function createIssuesLayer() {
+export function createIssuesLayer(): VectorLayer<VectorSource> {
   return new VectorLayer({ source: new VectorSource() })
 }
