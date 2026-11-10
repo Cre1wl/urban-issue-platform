@@ -27,7 +27,12 @@ export function createBasemapLayer(): TileLayer {
   })
 }
 
-// Слой маркеров обращений. Стили фич добавятся при реализации обращений
+// Маркеры обращений: стиль каждой фичи собирается из категории и статуса
 export function createIssuesLayer(): VectorLayer<VectorSource> {
-  return new VectorLayer({ source: new VectorSource() })
+  return new VectorLayer({ source: new VectorSource(), zIndex: 10 })
+}
+
+// Временная метка точки, выбранной при создании или редактировании обращения
+export function createPointLayer(): VectorLayer<VectorSource> {
+  return new VectorLayer({ source: new VectorSource(), zIndex: 20 })
 }

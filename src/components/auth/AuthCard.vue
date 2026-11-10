@@ -1,13 +1,20 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { RouterLink, useRouter } from 'vue-router'
+import { RouterLink, useRoute, useRouter } from 'vue-router'
 import Card from '../ui/Card.vue'
 import FormField from '../ui/FormField.vue'
 import FormStatus from '../ui/FormStatus.vue'
 import useUser from '../../composables/useUser'
 
 const router = useRouter()
+const route = useRoute()
 const { login, register } = useUser()
+
+// Возврат на страницу, с которой гость ушёл на авторизацию
+const redirectTarget = () => {
+  const target = String(route.query.redirect || '')
+  return target.startsWith('/') && !target.startsWith('//') ? target : '/map'
+}
 
 const mode = ref('login')
 const nickname = ref('')
@@ -25,7 +32,7 @@ const submit = async () => {
     } else {
       await register({ email: email.value, nickname: nickname.value, password: password.value })
     }
-    router.push('/map')
+    router.push(redirectTarget())
   } catch (err: any) {
     error.value = err?.message || 'Ошибка'
   } finally {

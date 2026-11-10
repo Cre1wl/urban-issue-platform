@@ -3,9 +3,9 @@ import { mkdirSync } from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import multer from 'multer'
-import type { Request, Response, NextFunction } from 'express'
+import type { NextFunction, Request, Response } from 'express'
 
-// Папка для аватаров: server/uploads (относительно index.ts, не зависит от cwd)
+// Папка загрузок: server/uploads (относительно index.ts, не зависит от cwd)
 export const uploadsDir = path.join(fileURLToPath(new URL('../../', import.meta.url)), 'uploads')
 mkdirSync(uploadsDir, { recursive: true })
 
@@ -25,14 +25,23 @@ const upload = multer({
   },
 })
 
-// Обёртка над multer: ошибки загрузки приводим к ответу 400
-export function avatarUpload(req: Request, res: Response, next: NextFunction) {
-  upload.single('avatar')(req, res, (err: unknown) => {
-    if (err) {
-      const error = err as Error & { status?: number }
-      error.status = 400
-      return next(error)
-    }
-    next()
-  })
+function handle(middleware: (req: Request, res: Response, callback: (err?: unknown) => void) => void) {
+  return (req: Request, res: Response, next: NextFunction) => {
+    middleware(req, res, (err?: unknown) => {
+      if (err) {
+        const error = err as Error & { status?: number }
+        error.status = 400
+        return next(error)
+      }
+      next()
+    })
+  }
+}
+
+export const avatarUpload = handle(upload.single('avatar'))
+export const issuePhotos = handle(upload.array('photos', 3))
+export const resolvedPhoto = handle(upload.single('resolvedPhoto'))
+
+export function fileUrl(file?: Express.Multer.File): string | null {
+  return file ? `/uploads/${file.filename}` : null
 }

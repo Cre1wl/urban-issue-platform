@@ -6,4 +6,4 @@ const schema = readFileSync(new URL('./schema.sql', import.meta.url), 'utf8')
 
 await pool.query(schema)
 await pool.end()
-console.log('Схема БД применена: таблица users создана')
+console.log('Схема БД применена')

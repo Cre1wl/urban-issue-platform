@@ -15,6 +15,7 @@ router.post('/register', async (req, res, next) => {
 
     if (!email || !nickname || !password) return res.status(400).json({ error: 'Заполните все поля' })
     if (password.length < 6) return res.status(400).json({ error: 'Пароль от 6 символов' })
+    if (nickname.length > 40) return res.status(400).json({ error: 'Ник до 40 символов' })
 
     const passwordHash = await bcrypt.hash(password, 10)
 
@@ -26,7 +27,8 @@ router.post('/register', async (req, res, next) => {
     const user = rows[0] as UserRow
 
     res.status(201).json({ token: signToken(user), user: toPublic(user) })
-  } catch (err) {
+  } catch (err: any) {
+    if (err?.code === '23505') return res.status(409).json({ error: 'Email или ник уже занят' })
     next(err)
   }
 })

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { RouterLink, useRoute, useRouter } from 'vue-router'
 import AppBrand from './AppBrand.vue'
 import AppIcon from './AppIcon.vue'
@@ -7,6 +8,9 @@ import useUser from '../composables/useUser'
 const route = useRoute()
 const router = useRouter()
 const { user, logout } = useUser()
+
+const isStaff = computed(() => user.value.role === 'moderator' || user.value.role === 'admin')
+const isAdmin = computed(() => user.value.role === 'admin')
 
 const onLogout = () => {
   logout()
@@ -26,8 +30,22 @@ const onLogout = () => {
       >
         Карта обращений
       </RouterLink>
-      <a class="nav__link">Объявления</a>
-      <a class="nav__link">О проекте</a>
+      <RouterLink
+        v-if="isStaff"
+        class="nav__link"
+        :class="{ 'nav__link--active': route.path === '/moderation' }"
+        to="/moderation"
+      >
+        Модерация
+      </RouterLink>
+      <RouterLink
+        v-if="isAdmin"
+        class="nav__link"
+        :class="{ 'nav__link--active': route.path === '/admin' }"
+        to="/admin"
+      >
+        Админ-панель
+      </RouterLink>
     </nav>
 
     <div class="header-actions">
